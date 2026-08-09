@@ -1,0 +1,114 @@
+1) LABEL ENCODING
+
+cols=["customers","Mangoes","Candies","Mangoes","Milkpackets"]
+indx=[]
+for i in range(0,len(cols)):
+  indx.append(i)
+print("#label encoding")
+print("index",indx)
+print("cols",cols)
+
+2)ONE - HOT ENCODING
+
+cols = ["customers", "Mangoes", "Candies", "Mangoes", "Milkpackets"]
+
+unique_cols = []
+
+for col in cols:
+    if col not in unique_cols:
+        unique_cols.append(col)
+
+one_hot = []
+
+for col in cols:
+    row = []
+    for unique in unique_cols:
+        if col == unique:
+            row.append(1)
+        else:
+            row.append(0)
+    one_hot.append(row)
+
+print("Unique columns:", unique_cols)
+print("One-hot encoding:")
+
+for i in range(len(cols)):
+    print(cols[i], one_hot[i])
+
+3)MINKOWSKI  DISTANCE 
+
+def minkowski_distance(x, y, p):
+    distance = 0
+
+    for i in range(len(x)):
+        distance += abs(x[i] - y[i]) ** p
+
+    distance = distance ** (1 / p)
+
+    return distance
+
+
+x = [1, 2, 3]
+y = [4, 5, 6]
+
+p = 3
+
+print("Minkowski Distance:", minkowski_distance(x, y, p))
+
+4)K-MEANS ALG
+
+
+data = [
+    [1, 2],
+    [2, 3],
+    [3, 4],
+    [8, 9],
+    [9, 10],
+    [10, 11],
+    [20, 21],
+    [21, 22],
+    [22, 23]
+]
+
+
+centroids = [
+    [1, 2],
+    [8, 9],
+    [20, 21]
+]
+
+for _ in range(10):
+
+    clusters = [[], [], []]
+
+    for point in data:
+        distances = []
+
+        for c in centroids:
+            d = sum((point[i] - c[i]) ** 2 for i in range(len(point)))
+            distances.append(d)
+
+        nearest = distances.index(min(distances))
+        clusters[nearest].append(point)
+
+
+    new_centroids = []
+
+    for cluster in clusters:
+        centroid = [
+            sum(point[i] for point in cluster) / len(cluster)
+            for i in range(len(cluster[0]))
+        ]
+        new_centroids.append(centroid)
+
+
+    if new_centroids == centroids:
+        break
+
+    centroids = new_centroids
+
+
+print("Centroids:", centroids)
+
+for i in range(3):
+    print("Cluster", i + 1, ":", clusters[i])
